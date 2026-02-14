@@ -1,0 +1,10 @@
+<div class="space-y-4">
+  @for (project of projects; track project.name) {
+    <div class=" shadow rounded p-4">
+      <h2 class="text-xl font-bold">{{ project.name }}</h2>
+      <p>{{ project.description }}</p>
+      <p class="text-sm text-gray-500">Statut : {{ project.status }}</p>
+      <app-task-list [tasks]="project.tasks"></app-task-list>
+    </div>
+  }
+</div>
