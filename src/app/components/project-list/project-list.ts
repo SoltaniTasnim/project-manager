@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { TaskList } from '../task-list/task-list';
 import { FormsModule } from '@angular/forms';
+import { ProjectDetail } from '../project-detail/project-detail';
+import {NgClass} from '@angular/common';
 
 type TaskStatus = 'En attente' | 'En cours' | 'Terminé';
 type TaskPriority = 'Haute' | 'Moyenne' | 'Basse';
@@ -16,9 +17,8 @@ type Project = {
   description: string;
   status: string;
   tasks: Task[];
-  expanded?: boolean;
 
-  // add form state
+  // add form state (we keep it but it will be used inside ProjectDetail now)
   newTaskTitle?: string;
   newTaskPriority?: TaskPriority;
   newTaskStatus?: TaskStatus;
@@ -26,17 +26,18 @@ type Project = {
 
 @Component({
   selector: 'app-project-list',
-  imports: [TaskList,FormsModule],
+  standalone: true,
+  imports: [FormsModule, ProjectDetail, NgClass],
   templateUrl: './project-list.html',
   styleUrl: './project-list.css',
 })
 export class ProjectList {
+
   projects: Project[] = [
     {
       name: 'Projet 1',
       description: 'Description 1',
       status: 'En cours',
-      expanded: false,
       tasks: [
         { title: 'Tâche 1', priority: 'Haute', status: 'En attente' },
         { title: 'Tâche 2', priority: 'Moyenne', status: 'En cours' },
@@ -49,7 +50,6 @@ export class ProjectList {
       name: 'Projet 2',
       description: 'Description 2',
       status: 'Terminé',
-      expanded: false,
       tasks: [{ title: 'Tâche 1', priority: 'Basse', status: 'Terminé' }],
       newTaskTitle: '',
       newTaskPriority: 'Moyenne',
@@ -57,73 +57,28 @@ export class ProjectList {
     },
   ];
 
-  // Filters
+  // project search (TP Partie 1 Q2 uses searchTerm naming, but you can keep search)
   search = '';
-  statusFilter: '' | TaskStatus = '';
-  priorityFilter: '' | TaskPriority = '';
 
-  readonly statuses: TaskStatus[] = ['En attente', 'En cours', 'Terminé'];
-  readonly priorities: TaskPriority[] = ['Haute', 'Moyenne', 'Basse'];
-
-  // Accordion
-  toggleAccordion(project: Project) {
-    for (const p of this.projects) {
-      if (p !== project) p.expanded = false;
-    }
-    project.expanded = !project.expanded;
-  }
-
-  // Counters
-  counts(project: Project) {
-    const total = project.tasks.length;
-    const enAttente = project.tasks.filter(t => t.status === 'En attente').length;
-    const enCours = project.tasks.filter(t => t.status === 'En cours').length;
-    const termine = project.tasks.filter(t => t.status === 'Terminé').length;
-    return { total, enAttente, enCours, termine };
-  }
-
-  // Progress (% done)
-  progress(project: Project) {
-    const total = project.tasks.length;
-    if (total === 0) return 0;
-    const done = project.tasks.filter(t => t.status === 'Terminé').length;
-    return Math.round((done / total) * 100);
-  }
-
-  // Filter tasks for a project
-  filteredTasks(project: Project): Task[] {
+  get filteredProjects(): Project[] {
     const q = this.search.trim().toLowerCase();
-    return project.tasks.filter(t => {
-      const matchesSearch = !q || t.title.toLowerCase().includes(q);
-      const matchesStatus = !this.statusFilter || t.status === this.statusFilter;
-      const matchesPriority = !this.priorityFilter || t.priority === this.priorityFilter;
-      return matchesSearch && matchesStatus && matchesPriority;
-    });
+    if (!q) return this.projects;
+    return this.projects.filter(p => p.name.toLowerCase().includes(q));
   }
 
-  // Add task (inline)
-  addTask(project: Project) {
-    const title = (project.newTaskTitle ?? '').trim();
-    if (!title) return;
 
-    const newTask: Task = {
-      title,
-      priority: project.newTaskPriority ?? 'Moyenne',
-      status: project.newTaskStatus ?? 'En attente',
-    };
+  selectedProjectName: string | null = null;
 
-    project.tasks = [...project.tasks, newTask];
-
-    // reset input
-    project.newTaskTitle = '';
-    project.newTaskPriority = 'Moyenne';
-    project.newTaskStatus = 'En attente';
+  selectProject(project: Project) {
+    this.selectedProjectName =
+      this.selectedProjectName === project.name ? null : project.name;
   }
 
-  // Optional: quick clear filters
-  clearFilters() {
+  getSelectedProject(): Project | null {
+    if (!this.selectedProjectName) return null;
+    return this.projects.find(p => p.name === this.selectedProjectName) ?? null;
+  }
+  clearSearch() {
     this.search = '';
-    this.statusFilter = '';
-    this.priorityFilter = '';
   }
 }

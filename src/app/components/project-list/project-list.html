@@ -1,180 +1,127 @@
-<div class="space-y-4">
-  <!-- Global filters -->
-  <div class="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
-    <div class="flex flex-col gap-3 md:flex-row md:items-center">
+<div class="space-y-6">
+
+  <!-- Search (projects) -->
+  <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+    <div class="flex flex-col gap-3 md:flex-row md:items-end">
       <div class="flex-1">
         <label class="text-xs font-semibold text-gray-600">Recherche</label>
-        <input
-          class="mt-1 w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm outline-none focus:border-gray-300"
-          placeholder="Chercher une tâche…"
-          [(ngModel)]="search"
-        />
-      </div>
+        <div class="mt-2 flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2 focus-within:border-blue-300">
+          <!-- search icon -->
+          <svg viewBox="0 0 20 20" class="h-5 w-5 text-gray-400" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M8.5 2a6.5 6.5 0 1 0 3.98 11.65l2.94 2.94a1 1 0 0 0 1.42-1.42l-2.94-2.94A6.5 6.5 0 0 0 8.5 2Zm0 2a4.5 4.5 0 1 1 0 9a4.5 4.5 0 0 1 0-9Z"
+            />
+          </svg>
 
-      <div class="w-full md:w-56">
-        <label class="text-xs font-semibold text-gray-600">Statut</label>
-        <select
-          class="mt-1 w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm outline-none focus:border-gray-300"
-          [(ngModel)]="statusFilter"
-        >
-          <option value="">Tous</option>
-          @for (s of statuses; track s) {
-            <option [value]="s">{{ s }}</option>
-          }
-        </select>
-      </div>
-
-      <div class="w-full md:w-56">
-        <label class="text-xs font-semibold text-gray-600">Priorité</label>
-        <select
-          class="mt-1 w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm outline-none focus:border-gray-300"
-          [(ngModel)]="priorityFilter"
-        >
-          <option value="">Toutes</option>
-          @for (p of priorities; track p) {
-            <option [value]="p">{{ p }}</option>
-          }
-        </select>
+          <input
+            class="w-full bg-transparent text-sm outline-none"
+            placeholder="Rechercher un projet…"
+            [(ngModel)]="search"
+          />
+        </div>
       </div>
 
       <button
         type="button"
-        (click)="clearFilters()"
-        class="mt-5 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm font-semibold text-gray-700 transition hover:bg-gray-100 md:mt-6"
+        (click)="clearSearch()"
+        class="rounded-xl border border-gray-200 bg-gray-50 px-4 py-2 text-sm font-semibold text-gray-700 transition hover:bg-gray-100"
       >
         Reset
       </button>
     </div>
   </div>
 
-  <!-- Projects -->
-  @for (project of projects; track project.name) {
-    @let c = counts(project);
-    @let percent = progress(project);
-
-    <div class="rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition hover:shadow-md">
-      <!-- Header -->
-      <button
-        type="button"
-        (click)="toggleAccordion(project)"
-        class="flex w-full items-start justify-between gap-4 text-left"
-      >
-        <div class="min-w-0 flex-1">
-          <div class="flex flex-wrap items-center gap-2">
-            <h2 class="truncate text-lg font-bold text-gray-900">{{ project.name }}</h2>
-
-            <!-- Project status badge -->
-            <span
-              class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold"
-              [class.bg-blue-100]="project.status === 'En cours'"
-              [class.text-blue-700]="project.status === 'En cours'"
-              [class.bg-green-100]="project.status === 'Terminé'"
-              [class.text-green-700]="project.status === 'Terminé'"
-              [class.bg-yellow-100]="project.status !== 'En cours' && project.status !== 'Terminé'"
-              [class.text-yellow-700]="project.status !== 'En cours' && project.status !== 'Terminé'"
-            >
-              {{ project.status }}
-            </span>
-          </div>
-
-          <p class="mt-1 text-sm text-gray-600">{{ project.description }}</p>
-
-          <!-- Counters -->
-          <div class="mt-3 flex flex-wrap gap-2 text-xs font-semibold">
-            <span class="rounded-full bg-gray-100 px-2 py-0.5 text-gray-700">Total: {{ c.total }}</span>
-            <span class="rounded-full bg-yellow-100 px-2 py-0.5 text-yellow-700">En attente: {{ c.enAttente }}</span>
-            <span class="rounded-full bg-blue-100 px-2 py-0.5 text-blue-700">En cours: {{ c.enCours }}</span>
-            <span class="rounded-full bg-green-100 px-2 py-0.5 text-green-700">Terminé: {{ c.termine }}</span>
-          </div>
-
-          <!-- Progress bar -->
-          <div class="mt-3">
-            <div class="flex items-center justify-between text-xs text-gray-600">
-              <span>Progression</span>
-              <span class="font-semibold text-gray-800">{{ percent }}%</span>
-            </div>
-            <div class="mt-1 h-2 w-full rounded-full bg-gray-100">
-              <div
-                class="h-2 rounded-full transition-all duration-500"
-                [style.width.%]="percent"
-                [class.bg-green-500]="percent === 100"
-                [class.bg-blue-500]="percent > 0 && percent < 100"
-                [class.bg-gray-300]="percent === 0"
-              ></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Arrow -->
-        <span
-          class="mt-1 inline-flex h-9 w-9 flex-none items-center justify-center rounded-lg border border-gray-200 bg-gray-50 transition"
-          [class.rotate-180]="project.expanded"
-          aria-hidden="true"
-        >
-          <svg viewBox="0 0 20 20" class="h-5 w-5">
-            <path
-              fill="currentColor"
-              d="M5.3 7.3a1 1 0 0 1 1.4 0L10 10.6l3.3-3.3a1 1 0 1 1 1.4 1.4l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 0-1.4z"
-            />
-          </svg>
-        </span>
-      </button>
-
-      <!-- Expandable content (animated) -->
-      <div
-        class="grid transition-all duration-300 ease-in-out"
-        [class.grid-rows-[0fr]]="!project.expanded"
-        [class.grid-rows-[1fr]]="project.expanded"
-      >
-        <div class="overflow-hidden">
-          <div class="mt-4 space-y-4">
-            <!-- Inline add task -->
-            <div class="rounded-lg border border-gray-200 bg-gray-50 p-3">
-              <p class="text-sm font-semibold text-gray-800">Ajouter une tâche</p>
-
-              <div class="mt-2 grid grid-cols-1 gap-2 md:grid-cols-3">
-                <input
-                  class="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm outline-none focus:border-gray-300"
-                  placeholder="Titre de la tâche"
-                  [(ngModel)]="project.newTaskTitle"
-                  (keydown.enter)="addTask(project)"
-                />
-
-                <select
-                  class="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm outline-none focus:border-gray-300"
-                  [(ngModel)]="project.newTaskPriority"
-                >
-                  @for (p of priorities; track p) {
-                    <option [value]="p">{{ p }}</option>
-                  }
-                </select>
-
-                <select
-                  class="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm outline-none focus:border-gray-300"
-                  [(ngModel)]="project.newTaskStatus"
-                >
-                  @for (s of statuses; track s) {
-                    <option [value]="s">{{ s }}</option>
-                  }
-                </select>
-              </div>
-
-              <div class="mt-2 flex items-center justify-end">
-                <button
-                  type="button"
-                  (click)="addTask(project)"
-                  class="rounded-lg bg-gray-900 px-3 py-2 text-sm font-semibold text-white transition hover:opacity-90"
-                >
-                  Ajouter
-                </button>
-              </div>
-            </div>
-
-            <!-- Task list with filters -->
-            <app-task-list [tasks]="filteredTasks(project)"></app-task-list>
-          </div>
-        </div>
-      </div>
+  <!-- Empty state -->
+  @if (filteredProjects.length === 0) {
+    <div class="rounded-2xl border border-dashed border-red-300 bg-red-50 p-8 text-center">
+      <p class="text-sm font-semibold text-red-700">Aucun projet trouvé</p>
+      <p class="mt-1 text-sm text-red-600">Essaie un autre mot-clé.</p>
     </div>
   }
+
+  <!-- Projects list -->
+  <div class="space-y-5">
+    @for (project of filteredProjects; track project.name) {
+
+      <div
+        class="group rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+      >
+        <div class="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+
+          <!-- Left -->
+          <div class="min-w-0 flex-1">
+            <div class="flex flex-wrap items-center gap-2">
+              <h2 class="truncate text-xl font-bold text-gray-900">
+                {{ project.name }}
+              </h2>
+
+              <!-- Status badge -->
+              <span
+                class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold"
+                [ngClass]="{
+                  'bg-blue-100 text-blue-700': project.status === 'En cours',
+                  'bg-green-100 text-green-700': project.status === 'Terminé',
+                  'bg-yellow-100 text-yellow-700': project.status !== 'En cours' && project.status !== 'Terminé'
+                }"
+              >
+                {{ project.status }}
+              </span>
+            </div>
+
+            <p class="mt-2 text-sm text-gray-600">
+              {{ project.description }}
+            </p>
+
+            <!-- subtle divider -->
+            <div class="mt-4 h-px w-full bg-gray-100"></div>
+
+            <!-- mini info row (optional nice touch) -->
+            <div class="mt-3 flex flex-wrap gap-2 text-xs font-semibold text-gray-700">
+              <span class="rounded-full bg-gray-100 px-3 py-1">
+                Tâches: {{ project.tasks.length }}
+              </span>
+              <span class="rounded-full bg-gray-100 px-3 py-1">
+                Statut: {{ project.status }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Right -->
+          <div class="flex items-center justify-between gap-3 md:flex-col md:items-end">
+            <button
+              type="button"
+              (click)="selectProject(project)"
+              class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
+            >
+              <span>{{ selectedProjectName === project.name ? 'Fermer' : 'Voir détails' }}</span>
+
+              <!-- chevron -->
+              <svg
+                viewBox="0 0 20 20"
+                class="h-5 w-5 transition"
+                [class.rotate-180]="selectedProjectName === project.name"
+                aria-hidden="true"
+              >
+                <path
+                  fill="currentColor"
+                  d="M5.3 7.3a1 1 0 0 1 1.4 0L10 10.6l3.3-3.3a1 1 0 1 1 1.4 1.4l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 0-1.4z"
+                />
+              </svg>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Detail under the project -->
+        @if (selectedProjectName === project.name) {
+          <div class="mt-5 rounded-2xl border border-gray-100 bg-gray-50 p-4">
+            <app-project-detail [project]="getSelectedProject()"></app-project-detail>
+          </div>
+        }
+      </div>
+
+    }
+  </div>
+
 </div>

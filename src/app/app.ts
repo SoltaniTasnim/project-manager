@@ -4,7 +4,7 @@ import {ProjectList} from './components/project-list/project-list';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,ProjectList],
+  imports: [RouterOutlet, ProjectList],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
