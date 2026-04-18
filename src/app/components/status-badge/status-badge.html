@@ -1,0 +1,10 @@
+<span
+  class="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold"
+  [ngClass]="badgeClasses"
+>
+  @if (prefix) {
+    <span aria-hidden="true">{{ prefix }}</span>
+  }
+  <span class="h-2 w-2 rounded-full" [ngClass]="dotClasses" aria-hidden="true"></span>
+  {{ status }}
+</span>

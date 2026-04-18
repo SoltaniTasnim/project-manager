@@ -1,22 +1,20 @@
 <div class="space-y-6">
+  <app-dashboard [projects]="projects"></app-dashboard>
 
-  <!-- Search (projects) -->
-  <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+  <div class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 shadow-sm">
     <div class="flex flex-col gap-3 md:flex-row md:items-end">
       <div class="flex-1">
-        <label class="text-xs font-semibold text-gray-600">Recherche</label>
-        <div class="mt-2 flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2 focus-within:border-blue-300">
-          <!-- search icon -->
-          <svg viewBox="0 0 20 20" class="h-5 w-5 text-gray-400" aria-hidden="true">
+        <label class="text-xs font-semibold text-gray-600 dark:text-gray-400">Recherche</label>
+        <div class="mt-2 flex items-center gap-2 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 focus-within:border-blue-300">
+          <svg viewBox="0 0 20 20" class="h-5 w-5 text-gray-400 dark:text-gray-500" aria-hidden="true">
             <path
               fill="currentColor"
               d="M8.5 2a6.5 6.5 0 1 0 3.98 11.65l2.94 2.94a1 1 0 0 0 1.42-1.42l-2.94-2.94A6.5 6.5 0 0 0 8.5 2Zm0 2a4.5 4.5 0 1 1 0 9a4.5 4.5 0 0 1 0-9Z"
             />
           </svg>
-
           <input
-            class="w-full bg-transparent text-sm outline-none"
-            placeholder="Rechercher un projet…"
+            class="w-full bg-transparent text-sm outline-none text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
+            placeholder="Rechercher un projet..."
             [(ngModel)]="search"
           />
         </div>
@@ -25,78 +23,57 @@
       <button
         type="button"
         (click)="clearSearch()"
-        class="rounded-xl border border-gray-200 bg-gray-50 px-4 py-2 text-sm font-semibold text-gray-700 transition hover:bg-gray-100"
+        class="rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-300 transition hover:bg-gray-100 dark:hover:bg-gray-600"
       >
         Reset
       </button>
     </div>
   </div>
 
-  <!-- Empty state -->
   @if (filteredProjects.length === 0) {
-    <div class="rounded-2xl border border-dashed border-red-300 bg-red-50 p-8 text-center">
-      <p class="text-sm font-semibold text-red-700">Aucun projet trouvé</p>
-      <p class="mt-1 text-sm text-red-600">Essaie un autre mot-clé.</p>
+    <div class="rounded-2xl border border-dashed border-red-300 dark:border-red-700 bg-red-50 dark:bg-red-900/20 p-8 text-center">
+      <p class="text-sm font-semibold text-red-700 dark:text-red-400">Aucun projet trouvé</p>
+      <p class="mt-1 text-sm text-red-600 dark:text-red-500">Essaie un autre mot-clé.</p>
     </div>
   }
 
-  <!-- Projects list -->
   <div class="space-y-5">
     @for (project of filteredProjects; track project.name) {
-
       <div
-        class="group rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+        class="group rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
       >
         <div class="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-
-          <!-- Left -->
           <div class="min-w-0 flex-1">
             <div class="flex flex-wrap items-center gap-2">
-              <h2 class="truncate text-xl font-bold text-gray-900">
+              <h2 class="truncate text-xl font-bold text-gray-900 dark:text-white">
                 {{ project.name }}
               </h2>
-
-              <!-- Status badge -->
-              <span
-                class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold"
-                [ngClass]="{
-                  'bg-blue-100 text-blue-700': project.status === 'En cours',
-                  'bg-green-100 text-green-700': project.status === 'Terminé',
-                  'bg-yellow-100 text-yellow-700': project.status !== 'En cours' && project.status !== 'Terminé'
-                }"
-              >
-                {{ project.status }}
-              </span>
+              <app-status-badge [status]="project.status"></app-status-badge>
             </div>
 
-            <p class="mt-2 text-sm text-gray-600">
+            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
               {{ project.description }}
             </p>
 
-            <!-- subtle divider -->
-            <div class="mt-4 h-px w-full bg-gray-100"></div>
+            <div class="mt-4 h-px w-full bg-gray-100 dark:bg-gray-700"></div>
 
-            <!-- mini info row (optional nice touch) -->
-            <div class="mt-3 flex flex-wrap gap-2 text-xs font-semibold text-gray-700">
-              <span class="rounded-full bg-gray-100 px-3 py-1">
+            <div class="mt-3 flex flex-wrap gap-2 text-xs font-semibold text-gray-700 dark:text-gray-300">
+              <span class="rounded-full bg-gray-100 dark:bg-gray-700 px-3 py-1">
                 Tâches: {{ project.tasks.length }}
               </span>
-              <span class="rounded-full bg-gray-100 px-3 py-1">
+              <span class="rounded-full bg-gray-100 dark:bg-gray-700 px-3 py-1">
                 Statut: {{ project.status }}
               </span>
             </div>
           </div>
 
-          <!-- Right -->
           <div class="flex items-center justify-between gap-3 md:flex-col md:items-end">
             <button
               type="button"
               (click)="selectProject(project)"
-              class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
+              class="inline-flex items-center gap-2 rounded-xl bg-blue-600 dark:bg-blue-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700 dark:hover:bg-blue-600"
             >
               <span>{{ selectedProjectName === project.name ? 'Fermer' : 'Voir détails' }}</span>
-
-              <!-- chevron -->
               <svg
                 viewBox="0 0 20 20"
                 class="h-5 w-5 transition"
@@ -110,18 +87,14 @@
               </svg>
             </button>
           </div>
-
         </div>
 
-        <!-- Detail under the project -->
         @if (selectedProjectName === project.name) {
-          <div class="mt-5 rounded-2xl border border-gray-100 bg-gray-50 p-4">
+          <div class="mt-5 rounded-2xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 p-4">
             <app-project-detail [project]="getSelectedProject()"></app-project-detail>
           </div>
         }
       </div>
-
     }
   </div>
-
 </div>

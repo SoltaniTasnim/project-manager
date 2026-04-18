@@ -1,0 +1,53 @@
+<section class="space-y-6">
+  <div class="grid grid-cols-1 gap-4 lg:grid-cols-4">
+    <article class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 shadow-sm">
+      <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Projets</p>
+      <p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">{{ totalProjects }}</p>
+    </article>
+
+    <article class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 shadow-sm">
+      <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Tâches</p>
+      <p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">{{ totalTasks }}</p>
+    </article>
+
+    <article class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 shadow-sm">
+      <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Terminées</p>
+      <p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">{{ completedTasks }}</p>
+    </article>
+
+    <article class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 shadow-sm">
+      <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Progression globale</p>
+      <p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">{{ globalProgress }}%</p>
+    </article>
+  </div>
+
+  <div class="rounded-3xl border border-blue-100 dark:border-blue-900/60 bg-gradient-to-br from-blue-50 to-white dark:from-gray-800 dark:to-gray-900 p-6 shadow-sm">
+    <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+      <div class="max-w-xl">
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600 dark:text-blue-300">
+          Dashboard
+        </p>
+        <h2 class="mt-2 text-2xl font-bold text-gray-900 dark:text-white">
+          Vue d'ensemble de l'avancement
+        </h2>
+        <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+          Ce cercle illustre la part des tâches terminées sur l'ensemble des projets.
+        </p>
+      </div>
+
+      <div class="flex justify-center">
+        <div
+          class="relative flex h-40 w-40 items-center justify-center rounded-full"
+          [style.background]="ringStyle"
+        >
+          <div class="flex h-28 w-28 flex-col items-center justify-center rounded-full bg-white dark:bg-gray-900 shadow-inner">
+            <span class="text-3xl font-bold text-gray-900 dark:text-white">{{ globalProgress }}%</span>
+            <span class="mt-1 text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">
+              complété
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

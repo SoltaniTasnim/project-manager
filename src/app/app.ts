@@ -10,4 +10,14 @@ import {ProjectList} from './components/project-list/project-list';
 })
 export class App {
   protected readonly title = signal('project-manager');
+  isDark = false;
+
+  toggleTheme() {
+    this.isDark = !this.isDark;
+    if (this.isDark) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }
 }
