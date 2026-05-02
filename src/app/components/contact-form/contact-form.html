@@ -1,0 +1,153 @@
+<section class="rounded-3xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-sm">
+  <div class="flex flex-col gap-2">
+    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600 dark:text-blue-300">
+      TP5 - Reactive Forms
+    </p>
+    <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Partie 1 - Formulaire de contact</h2>
+    <p class="text-sm text-gray-600 dark:text-gray-400">
+      Formulaire réactif avec validations, messages d'erreur et aperçu JSON.
+    </p>
+  </div>
+
+  <form
+    class="mt-6 space-y-5"
+    [formGroup]="contactForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div class="space-y-2">
+        <label for="contact-nom" class="text-sm font-semibold text-gray-700 dark:text-gray-300">
+          Nom
+        </label>
+        <input
+          id="contact-nom"
+          type="text"
+          formControlName="nom"
+          [class.is-invalid]="nom?.invalid && nom?.touched"
+          class="w-full rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-3 text-sm text-gray-900 dark:text-white outline-none transition focus:border-blue-400"
+          placeholder="Votre nom"
+        />
+        @if (nom?.invalid && nom?.touched) {
+          <div class="space-y-1">
+            @if (nom?.errors?.['required']) {
+              <p class="error-message">Le nom est requis.</p>
+            }
+            @if (nom?.errors?.['minlength']) {
+              <p class="error-message">Le nom doit contenir au moins 2 caractères.</p>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="space-y-2">
+        <label for="contact-prenom" class="text-sm font-semibold text-gray-700 dark:text-gray-300">
+          Prénom
+        </label>
+        <input
+          id="contact-prenom"
+          type="text"
+          formControlName="prenom"
+          [class.is-invalid]="prenom?.invalid && prenom?.touched"
+          class="w-full rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-3 text-sm text-gray-900 dark:text-white outline-none transition focus:border-blue-400"
+          placeholder="Votre prénom"
+        />
+        @if (prenom?.invalid && prenom?.touched) {
+          <div class="space-y-1">
+            @if (prenom?.errors?.['required']) {
+              <p class="error-message">Le prénom est requis.</p>
+            }
+            @if (prenom?.errors?.['minlength']) {
+              <p class="error-message">Le prénom doit contenir au moins 2 caractères.</p>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div class="space-y-2">
+        <label for="contact-email" class="text-sm font-semibold text-gray-700 dark:text-gray-300">
+          Email
+        </label>
+        <input
+          id="contact-email"
+          type="email"
+          formControlName="email"
+          [class.is-invalid]="email?.invalid && email?.touched"
+          class="w-full rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-3 text-sm text-gray-900 dark:text-white outline-none transition focus:border-blue-400"
+          placeholder="nom@exemple.com"
+        />
+        @if (email?.invalid && email?.touched) {
+          <div class="space-y-1">
+            @if (email?.errors?.['required']) {
+              <p class="error-message">L'email est requis.</p>
+            }
+            @if (email?.errors?.['email']) {
+              <p class="error-message">Le format de l'email est invalide.</p>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="space-y-2">
+        <label for="contact-telephone" class="text-sm font-semibold text-gray-700 dark:text-gray-300">
+          Téléphone
+        </label>
+        <input
+          id="contact-telephone"
+          type="tel"
+          formControlName="telephone"
+          [class.is-invalid]="telephone?.invalid && telephone?.touched"
+          class="w-full rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-3 text-sm text-gray-900 dark:text-white outline-none transition focus:border-blue-400"
+          placeholder="12345678"
+        />
+        @if (telephone?.invalid && telephone?.touched) {
+          <div class="space-y-1">
+            @if (telephone?.errors?.['pattern']) {
+              <p class="error-message">Le téléphone doit contenir exactement 8 chiffres.</p>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="space-y-2">
+      <label for="contact-message" class="text-sm font-semibold text-gray-700 dark:text-gray-300">
+        Message
+      </label>
+      <textarea
+        id="contact-message"
+        rows="5"
+        formControlName="message"
+        [class.is-invalid]="message?.invalid && message?.touched"
+        class="w-full rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-3 text-sm text-gray-900 dark:text-white outline-none transition focus:border-blue-400"
+        placeholder="Décrivez votre demande..."
+      ></textarea>
+      @if (message?.invalid && message?.touched) {
+        <div class="space-y-1">
+          @if (message?.errors?.['required']) {
+            <p class="error-message">Le message est requis.</p>
+          }
+          @if (message?.errors?.['minlength']) {
+            <p class="error-message">Le message doit contenir au moins 10 caractères.</p>
+          }
+        </div>
+      }
+    </div>
+
+    <button
+      type="submit"
+      [disabled]="contactForm.invalid"
+      class="rounded-2xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+    >
+      Envoyer
+    </button>
+  </form>
+
+  <div class="mt-6 rounded-2xl bg-gray-50 dark:bg-gray-900 p-4">
+    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">
+      Valeur du formulaire
+    </p>
+    <pre class="mt-3 overflow-x-auto text-sm text-gray-800 dark:text-gray-200">{{ contactForm.value | json }}</pre>
+  </div>
+</section>

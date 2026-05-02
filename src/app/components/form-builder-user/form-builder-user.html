@@ -1,0 +1,148 @@
+<section class="rounded-3xl border border-amber-100 dark:border-amber-900/60 bg-white dark:bg-gray-800 p-6 shadow-sm">
+  <div class="flex flex-col gap-2 lg:flex-row lg:items-end lg:justify-between">
+    <div>
+      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-amber-700 dark:text-amber-300">
+        TP5 - Partie 3
+      </p>
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
+        FormBuilder et methodes utilitaires
+      </h2>
+    </div>
+  </div>
+
+  <form class="mt-6 grid grid-cols-1 gap-4 xl:grid-cols-2" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <div class="space-y-2">
+      <label for="builder-nom" class="text-sm font-semibold text-gray-700 dark:text-gray-300">Nom</label>
+      <input
+        id="builder-nom"
+        type="text"
+        formControlName="nom"
+        [class.is-invalid]="nom?.invalid && nom?.touched"
+        class="w-full rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-3 text-sm text-gray-900 dark:text-white outline-none transition focus:border-amber-400"
+        placeholder="Nom"
+      />
+      @if (nom?.invalid && nom?.touched) {
+        @if (nom?.errors?.['required']) {
+          <p class="error-message">Le nom est requis.</p>
+        }
+        @if (nom?.errors?.['minlength']) {
+          <p class="error-message">Le nom doit contenir au moins 2 caracteres.</p>
+        }
+      }
+    </div>
+
+    <div class="space-y-2">
+      <label for="builder-prenom" class="text-sm font-semibold text-gray-700 dark:text-gray-300">Prenom</label>
+      <input
+        id="builder-prenom"
+        type="text"
+        formControlName="prenom"
+        [class.is-invalid]="prenom?.invalid && prenom?.touched"
+        class="w-full rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-3 text-sm text-gray-900 dark:text-white outline-none transition focus:border-amber-400"
+        placeholder="Prenom"
+      />
+      @if (prenom?.invalid && prenom?.touched) {
+        @if (prenom?.errors?.['required']) {
+          <p class="error-message">Le prenom est requis.</p>
+        }
+        @if (prenom?.errors?.['minlength']) {
+          <p class="error-message">Le prenom doit contenir au moins 2 caracteres.</p>
+        }
+      }
+    </div>
+
+    <div class="space-y-2">
+      <label for="builder-email" class="text-sm font-semibold text-gray-700 dark:text-gray-300">Email</label>
+      <input
+        id="builder-email"
+        type="email"
+        formControlName="email"
+        [class.is-invalid]="email?.invalid && email?.touched"
+        class="w-full rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-3 text-sm text-gray-900 dark:text-white outline-none transition focus:border-amber-400"
+        placeholder="user@example.com"
+      />
+      @if (email?.invalid && email?.touched) {
+        @if (email?.errors?.['required']) {
+          <p class="error-message">L'email est requis.</p>
+        }
+        @if (email?.errors?.['email']) {
+          <p class="error-message">Le format de l'email est invalide.</p>
+        }
+      }
+    </div>
+
+    <div class="space-y-2">
+      <label for="builder-age" class="text-sm font-semibold text-gray-700 dark:text-gray-300">Age</label>
+      <input
+        id="builder-age"
+        type="number"
+        formControlName="age"
+        [class.is-invalid]="age?.invalid && age?.touched"
+        class="w-full rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-3 text-sm text-gray-900 dark:text-white outline-none transition focus:border-amber-400"
+        placeholder="18"
+      />
+      @if (age?.invalid && age?.touched) {
+        @if (age?.errors?.['required']) {
+          <p class="error-message">L'age est requis.</p>
+        }
+        @if (age?.errors?.['min']) {
+          <p class="error-message">L'age minimum est 18.</p>
+        }
+        @if (age?.errors?.['max']) {
+          <p class="error-message">L'age maximum est 100.</p>
+        }
+      }
+    </div>
+
+    <div class="space-y-2 xl:col-span-2">
+      <label for="builder-ville" class="text-sm font-semibold text-gray-700 dark:text-gray-300">Ville</label>
+      <input
+        id="builder-ville"
+        type="text"
+        formControlName="ville"
+        [class.is-invalid]="ville?.invalid && ville?.touched"
+        class="w-full rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-3 text-sm text-gray-900 dark:text-white outline-none transition focus:border-amber-400"
+        placeholder="Sfax"
+      />
+      @if (ville?.invalid && ville?.touched && ville?.errors?.['required']) {
+        <p class="error-message">La ville est requise.</p>
+      }
+    </div>
+
+    <div class="flex flex-wrap gap-3 xl:col-span-2">
+      <button
+        type="submit"
+        class="rounded-2xl bg-amber-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-amber-700"
+      >
+        Valider
+      </button>
+      <button
+        type="button"
+        (click)="markFormGroupTouched()"
+        class="rounded-2xl border border-gray-300 dark:border-gray-600 px-5 py-3 text-sm font-semibold text-gray-800 dark:text-white transition hover:bg-gray-100 dark:hover:bg-gray-700"
+      >
+        Tout marquer comme touched
+      </button>
+      <button
+        type="button"
+        (click)="resetForm()"
+        class="rounded-2xl border border-amber-200 dark:border-amber-800 px-5 py-3 text-sm font-semibold text-amber-800 dark:text-amber-200 transition hover:bg-amber-50 dark:hover:bg-amber-950/30"
+      >
+        Reset
+      </button>
+    </div>
+  </form>
+
+  @if (submitted && userForm.valid) {
+    <div class="mt-6 rounded-2xl border border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-950/30 p-4 text-sm font-medium text-green-800 dark:text-green-200">
+      Formulaire valide. Les donnees utilisateur sont pretes.
+    </div>
+  }
+
+  <div class="mt-6 rounded-2xl bg-gray-50 dark:bg-gray-900 p-4">
+    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">
+      Valeur du formulaire
+    </p>
+    <pre class="mt-3 overflow-x-auto text-sm text-gray-800 dark:text-gray-200">{{ userForm.value | json }}</pre>
+  </div>
+</section>

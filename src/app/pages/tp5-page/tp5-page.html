@@ -1,0 +1,88 @@
+<section class="space-y-6">
+  <div class="rounded-3xl border border-emerald-100 dark:border-emerald-900/60 bg-gradient-to-br from-emerald-50 to-white dark:from-gray-800 dark:to-gray-900 p-6 shadow-sm">
+    <div class="flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
+      <div class="max-w-3xl">
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-300">
+          TP5
+        </p>
+        <h2 class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
+          Reactive Forms
+        </h2>
+        <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+          Une page dediee pour TP5 avec des parties separees clairement: contact reactive form,
+          validations personnalisees, verification asynchrone et confirmation de mot de passe.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
+        <div class="rounded-2xl border border-white/60 bg-white/80 p-4 backdrop-blur dark:border-gray-700 dark:bg-gray-800/80">
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-blue-600 dark:text-blue-300">
+            Partie 1
+          </p>
+          <p class="mt-2 text-sm font-medium text-gray-900 dark:text-white">
+            Contact form avec validations et messages d'erreur.
+          </p>
+        </div>
+        <div class="rounded-2xl border border-white/60 bg-white/80 p-4 backdrop-blur dark:border-gray-700 dark:bg-gray-800/80">
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-300">
+            Partie 2
+          </p>
+          <p class="mt-2 text-sm font-medium text-gray-900 dark:text-white">
+            Password validators, match validator et email async validator.
+          </p>
+        </div>
+        <div class="rounded-2xl border border-white/60 bg-white/80 p-4 backdrop-blur dark:border-gray-700 dark:bg-gray-800/80">
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-amber-600 dark:text-amber-300">
+            Partie 3
+          </p>
+          <p class="mt-2 text-sm font-medium text-gray-900 dark:text-white">
+            FormBuilder, getters, markFormGroupTouched() et resetForm().
+          </p>
+        </div>
+        <div class="rounded-2xl border border-white/60 bg-white/80 p-4 backdrop-blur dark:border-gray-700 dark:bg-gray-800/80">
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-sky-600 dark:text-sky-300">
+            Partie 4
+          </p>
+          <p class="mt-2 text-sm font-medium text-gray-900 dark:text-white">
+            FormArray d'emails et formulaire de competences.
+          </p>
+        </div>
+        <div class="rounded-2xl border border-white/60 bg-white/80 p-4 backdrop-blur dark:border-gray-700 dark:bg-gray-800/80">
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-rose-600 dark:text-rose-300">
+            Partie 5
+          </p>
+          <p class="mt-2 text-sm font-medium text-gray-900 dark:text-white">
+            Groupes imbriques et liste de plusieurs adresses.
+          </p>
+        </div>
+        <div class="rounded-2xl border border-white/60 bg-white/80 p-4 backdrop-blur dark:border-gray-700 dark:bg-gray-800/80">
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-teal-600 dark:text-teal-300">
+            Partie 6
+          </p>
+          <p class="mt-2 text-sm font-medium text-gray-900 dark:text-white">
+            ValidationService et directive structurelle ShowError.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 gap-6 2xl:grid-cols-2">
+    <app-contact-form></app-contact-form>
+    <app-account-form></app-account-form>
+  </div>
+
+  <app-form-builder-user></app-form-builder-user>
+
+  <div class="grid grid-cols-1 gap-6 2xl:grid-cols-2">
+    <app-dynamic-emails-form></app-dynamic-emails-form>
+    <app-skills-form></app-skills-form>
+  </div>
+
+  <div class="grid grid-cols-1 gap-6 2xl:grid-cols-2">
+    <app-nested-address-form></app-nested-address-form>
+    <app-multi-addresses-form></app-multi-addresses-form>
+  </div>
+
+  <app-validation-lab></app-validation-lab>
+</section>

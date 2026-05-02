@@ -1,0 +1,81 @@
+<section class="rounded-3xl border border-teal-100 dark:border-teal-900/60 bg-white dark:bg-gray-800 p-6 shadow-sm">
+  <div class="flex flex-col gap-2 lg:flex-row lg:items-end lg:justify-between">
+    <div>
+      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-teal-700 dark:text-teal-300">
+        TP5 - Partie 6
+      </p>
+      <h3 class="text-2xl font-bold text-gray-900 dark:text-white">
+        ValidationService et directive ShowError
+      </h3>
+      <p class="text-sm text-gray-600 dark:text-gray-400">
+        Les messages d'erreur sont centralises dans un service et affiches avec une directive structurelle.
+      </p>
+    </div>
+  </div>
+
+  <form class="mt-6 grid grid-cols-1 gap-4 xl:grid-cols-2" [formGroup]="validationForm" (ngSubmit)="submit()">
+    <div class="space-y-2">
+      <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Username</label>
+      <input formControlName="username" class="w-full rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-3 text-sm text-gray-900 dark:text-white outline-none transition focus:border-teal-400" />
+      <p *appShowError="username; errorType: 'required'" class="error-message">{{ validationService.getErrorMessage(username) }}</p>
+      <p *appShowError="username; errorType: 'minlength'" class="error-message">{{ validationService.getErrorMessage(username) }}</p>
+      <p *appShowError="username; errorType: 'maxlength'" class="error-message">{{ validationService.getErrorMessage(username) }}</p>
+    </div>
+
+    <div class="space-y-2">
+      <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Email</label>
+      <input formControlName="email" class="w-full rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-3 text-sm text-gray-900 dark:text-white outline-none transition focus:border-teal-400" />
+      @if (email?.pending) {
+        <p class="pending-message">Verification en cours...</p>
+      }
+      <p *appShowError="email; errorType: 'required'" class="error-message">{{ validationService.getErrorMessage(email) }}</p>
+      <p *appShowError="email; errorType: 'email'" class="error-message">{{ validationService.getErrorMessage(email) }}</p>
+      <p *appShowError="email; errorType: 'emailExists'" class="error-message">{{ validationService.getErrorMessage(email) }}</p>
+    </div>
+
+    <div class="space-y-2">
+      <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Age</label>
+      <input type="number" formControlName="age" class="w-full rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-3 text-sm text-gray-900 dark:text-white outline-none transition focus:border-teal-400" />
+      <p *appShowError="age; errorType: 'required'" class="error-message">{{ validationService.getErrorMessage(age) }}</p>
+      <p *appShowError="age; errorType: 'min'" class="error-message">{{ validationService.getErrorMessage(age) }}</p>
+      <p *appShowError="age; errorType: 'max'" class="error-message">{{ validationService.getErrorMessage(age) }}</p>
+    </div>
+
+    <div class="space-y-2">
+      <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Code</label>
+      <input formControlName="code" class="w-full rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-3 text-sm text-gray-900 dark:text-white outline-none transition focus:border-teal-400" placeholder="12345678" />
+      <p *appShowError="code; errorType: 'required'" class="error-message">{{ validationService.getErrorMessage(code) }}</p>
+      <p *appShowError="code; errorType: 'pattern'" class="error-message">{{ validationService.getErrorMessage(code) }}</p>
+    </div>
+
+    <div class="space-y-2">
+      <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Password</label>
+      <input type="password" formControlName="password" class="w-full rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-3 text-sm text-gray-900 dark:text-white outline-none transition focus:border-teal-400" />
+      <p *appShowError="password; errorType: 'required'" class="error-message">{{ validationService.getErrorMessage(password) }}</p>
+      <p *appShowError="password; errorType: 'passwordStrength'" class="error-message">{{ validationService.getErrorMessage(password) }}</p>
+    </div>
+
+    <div class="space-y-2">
+      <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Confirm password</label>
+      <input type="password" formControlName="confirmPassword" class="w-full rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-3 text-sm text-gray-900 dark:text-white outline-none transition focus:border-teal-400" />
+      <p *appShowError="confirmPassword; errorType: 'required'" class="error-message">{{ validationService.getErrorMessage(confirmPassword) }}</p>
+      <p *appShowError="confirmPassword; errorType: 'mustMatch'" class="error-message">{{ validationService.getErrorMessage(confirmPassword) }}</p>
+    </div>
+
+    <div class="xl:col-span-2">
+      <button
+        type="submit"
+        class="rounded-2xl bg-teal-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-teal-700"
+      >
+        Verifier les erreurs
+      </button>
+    </div>
+  </form>
+
+  <div class="mt-6 rounded-2xl bg-gray-50 dark:bg-gray-900 p-4">
+    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">
+      Valeur du formulaire
+    </p>
+    <pre class="mt-3 overflow-x-auto text-sm text-gray-800 dark:text-gray-200">{{ validationForm.value | json }}</pre>
+  </div>
+</section>

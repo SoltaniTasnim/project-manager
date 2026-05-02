@@ -1,0 +1,28 @@
+:host {
+  display: block;
+}
+
+.is-invalid {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 1px #ef4444;
+}
+
+.error-message {
+  color: #dc2626;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+}
+
+.hint-message {
+  color: #b45309;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.pending-message {
+  color: #2563eb;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+}

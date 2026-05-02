@@ -1,0 +1,17 @@
+:host {
+  display: block;
+}
+
+.error-message {
+  color: #dc2626;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+}
+
+.pending-message {
+  color: #0f766e;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+}
